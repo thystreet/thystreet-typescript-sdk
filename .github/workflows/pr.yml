@@ -1,0 +1,23 @@
+name: pr
+
+on:
+  push:
+    branches:
+      # apigentools will push branches named like
+      # 'typescript/1568207674.3489769'
+      - 'typescript/*'
+
+jobs:
+  open-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/github-script@v4
+        with:
+          script: |
+            github.pulls.create({
+              ...context.repo,
+              title: context.payload.commits[0]['message'],
+              head: context.ref,
+              base: 'master'
+            })
