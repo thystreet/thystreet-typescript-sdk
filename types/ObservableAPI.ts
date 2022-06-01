@@ -46,6 +46,7 @@ export class ObservableDeviceApi {
     }
 
     /**
+     * Toggle your device tariff when your device goes online using this api.
      * @param setDeviceDetailsDto 
      */
     public setDetails(setDeviceDetailsDto: SetDeviceDetailsDto, _options?: Configuration): Observable<void> {
@@ -108,7 +109,7 @@ export class ObservableOrderApi {
     }
 
     /**
-     * @param orderToken This is the id recieved from the qrcode
+     * @param orderToken This is the id recieved from the qrcode or on your webhook
      */
     public getOrderById(orderToken: string, _options?: Configuration): Observable<void> {
         const requestContextPromise = this.requestFactory.getOrderById(orderToken, _options);
@@ -130,10 +131,11 @@ export class ObservableOrderApi {
     }
 
     /**
+     * @param orderToken This is the id recieved from the qrcode or on your webhook
      * @param orderStatusDto 
      */
-    public setStatus(orderStatusDto: OrderStatusDto, _options?: Configuration): Observable<void> {
-        const requestContextPromise = this.requestFactory.setStatus(orderStatusDto, _options);
+    public setStatus(orderToken: string, orderStatusDto: OrderStatusDto, _options?: Configuration): Observable<void> {
+        const requestContextPromise = this.requestFactory.setStatus(orderToken, orderStatusDto, _options);
 
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);

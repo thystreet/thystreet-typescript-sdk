@@ -3,7 +3,7 @@ export * from './OrderStatusDto';
 export * from './SetDeviceDetailsDto';
 
 import { DeviceTokenDto } from './DeviceTokenDto';
-import { OrderStatusDto , OrderStatusDtoStatusEnum   } from './OrderStatusDto';
+import { OrderStatusDto, OrderStatusDtoStatusEnum   } from './OrderStatusDto';
 import { SetDeviceDetailsDto } from './SetDeviceDetailsDto';
 
 /* tslint:disable:no-unused-variable */

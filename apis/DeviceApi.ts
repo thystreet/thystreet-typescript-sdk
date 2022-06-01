@@ -55,6 +55,7 @@ export class DeviceApiRequestFactory extends BaseAPIRequestFactory {
     }
 
     /**
+     * Toggle your device tariff when your device goes online using this api.
      * @param setDeviceDetailsDto 
      */
     public async setDetails(setDeviceDetailsDto: SetDeviceDetailsDto, _options?: Configuration): Promise<RequestContext> {

@@ -18,7 +18,7 @@ import { OrderStatusDto } from '../models/OrderStatusDto';
 export class OrderApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
-     * @param orderToken This is the id recieved from the qrcode
+     * @param orderToken This is the id recieved from the qrcode or on your webhook
      */
     public async getOrderById(orderToken: string, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
@@ -54,10 +54,17 @@ export class OrderApiRequestFactory extends BaseAPIRequestFactory {
     }
 
     /**
+     * @param orderToken This is the id recieved from the qrcode or on your webhook
      * @param orderStatusDto 
      */
-    public async setStatus(orderStatusDto: OrderStatusDto, _options?: Configuration): Promise<RequestContext> {
+    public async setStatus(orderToken: string, orderStatusDto: OrderStatusDto, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
+
+        // verify required parameter 'orderToken' is not null or undefined
+        if (orderToken === null || orderToken === undefined) {
+            throw new RequiredError("OrderApi", "setStatus", "orderToken");
+        }
+
 
         // verify required parameter 'orderStatusDto' is not null or undefined
         if (orderStatusDto === null || orderStatusDto === undefined) {
@@ -66,7 +73,8 @@ export class OrderApiRequestFactory extends BaseAPIRequestFactory {
 
 
         // Path Params
-        const localVarPath = '/order/status';
+        const localVarPath = '/order/status/{orderToken}'
+            .replace('{' + 'orderToken' + '}', encodeURIComponent(String(orderToken)));
 
         // Make Request Context
         const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.PUT);
@@ -115,6 +123,9 @@ export class OrderApiResponseProcessor {
         if (isCodeInRange("200", response.httpStatusCode)) {
             return;
         }
+        if (isCodeInRange("400", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Invalid order token", undefined, response.headers);
+        }
         if (isCodeInRange("401", response.httpStatusCode)) {
             throw new ApiException<undefined>(response.httpStatusCode, "Unauthorized.", undefined, response.headers);
         }
@@ -145,6 +156,9 @@ export class OrderApiResponseProcessor {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             return;
+        }
+        if (isCodeInRange("400", response.httpStatusCode)) {
+            throw new ApiException<undefined>(response.httpStatusCode, "Invalid order token", undefined, response.headers);
         }
         if (isCodeInRange("401", response.httpStatusCode)) {
             throw new ApiException<undefined>(response.httpStatusCode, "Unauthorized.", undefined, response.headers);
