@@ -14,10 +14,6 @@ import { HttpFile } from '../http/http';
 
 export class OrderStatusDto {
     /**
-    * Order ID
-    */
-    'orderId': string;
-    /**
     * Set order status
     */
     'status': OrderStatusDtoStatusEnum;
@@ -25,12 +21,6 @@ export class OrderStatusDto {
     static readonly discriminator: string | undefined = undefined;
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
-        {
-            "name": "orderId",
-            "baseName": "orderId",
-            "type": "string",
-            "format": ""
-        },
         {
             "name": "status",
             "baseName": "status",
@@ -47,5 +37,5 @@ export class OrderStatusDto {
 }
 
 
-export type OrderStatusDtoStatusEnum = "CONFIRMED" | "COMPLETED" | "FAILED" ;
+export type OrderStatusDtoStatusEnum = "CONFIRMED" | "PENDING" | "COMPLETED" | "FAILED" ;
 

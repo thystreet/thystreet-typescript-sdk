@@ -51,6 +51,7 @@ export class ObjectDeviceApi {
     }
 
     /**
+     * Toggle your device tariff when your device goes online using this api.
      * @param param the request object
      */
     public setDetails(param: DeviceApiSetDetailsRequest, options?: Configuration): Promise<void> {
@@ -71,7 +72,7 @@ import { OrderApiRequestFactory, OrderApiResponseProcessor} from "../apis/OrderA
 
 export interface OrderApiGetOrderByIdRequest {
     /**
-     * This is the id recieved from the qrcode
+     * This is the id recieved from the qrcode or on your webhook
      * @type string
      * @memberof OrderApigetOrderById
      */
@@ -79,6 +80,12 @@ export interface OrderApiGetOrderByIdRequest {
 }
 
 export interface OrderApiSetStatusRequest {
+    /**
+     * This is the id recieved from the qrcode or on your webhook
+     * @type string
+     * @memberof OrderApisetStatus
+     */
+    orderToken: string
     /**
      * 
      * @type OrderStatusDto
@@ -105,7 +112,7 @@ export class ObjectOrderApi {
      * @param param the request object
      */
     public setStatus(param: OrderApiSetStatusRequest, options?: Configuration): Promise<void> {
-        return this.api.setStatus(param.orderStatusDto,  options).toPromise();
+        return this.api.setStatus(param.orderToken, param.orderStatusDto,  options).toPromise();
     }
 
 }

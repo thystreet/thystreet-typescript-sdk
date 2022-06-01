@@ -5,7 +5,7 @@ All URIs are relative to *https://cheffy-api.thystreet.com/api/v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**getOrderById**](OrderApi.md#getOrderById) | **GET** /order/params/{orderToken} | 
-[**setStatus**](OrderApi.md#setStatus) | **PUT** /order/status | 
+[**setStatus**](OrderApi.md#setStatus) | **PUT** /order/status/{orderToken} | 
 
 
 # **getOrderById**
@@ -23,8 +23,8 @@ const configuration = ThyStreet.createConfiguration();
 const apiInstance = new ThyStreet.OrderApi(configuration);
 
 let body:ThyStreet.OrderApiGetOrderByIdRequest = {
-  // string | This is the id recieved from the qrcode
-  orderToken: "orderToken_example",
+  // string | This is the id recieved from the qrcode or on your webhook
+  orderToken: "thystreet-FucAdwCipV6nLlVsesnu",
 };
 
 apiInstance.getOrderById(body).then((data:any) => {
@@ -37,7 +37,7 @@ apiInstance.getOrderById(body).then((data:any) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **orderToken** | [**string**] | This is the id recieved from the qrcode | defaults to undefined
+ **orderToken** | [**string**] | This is the id recieved from the qrcode or on your webhook | defaults to undefined
 
 
 ### Return type
@@ -58,6 +58,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Returns order information for the given id |  -  |
+**400** | Invalid order token |  -  |
 **401** | Unauthorized. |  -  |
 **403** | Forbidden. |  -  |
 
@@ -78,9 +79,10 @@ const configuration = ThyStreet.createConfiguration();
 const apiInstance = new ThyStreet.OrderApi(configuration);
 
 let body:ThyStreet.OrderApiSetStatusRequest = {
+  // string | This is the id recieved from the qrcode or on your webhook
+  orderToken: "thystreet-FucAdwCipV6nLlVsesnu",
   // OrderStatusDto
   orderStatusDto: {
-    orderId: "orderId_example",
     status: "CONFIRMED",
   },
 };
@@ -96,6 +98,7 @@ apiInstance.setStatus(body).then((data:any) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orderStatusDto** | **OrderStatusDto**|  |
+ **orderToken** | [**string**] | This is the id recieved from the qrcode or on your webhook | defaults to undefined
 
 
 ### Return type
@@ -116,6 +119,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Updates order status. |  -  |
+**400** | Invalid order token |  -  |
 **401** | Unauthorized. |  -  |
 **403** | Forbidden. |  -  |
 

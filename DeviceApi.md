@@ -5,7 +5,7 @@ All URIs are relative to *https://cheffy-api.thystreet.com/api/v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**generateToken**](DeviceApi.md#generateToken) | **GET** /device/generate/{deviceId} | 
-[**setDetails**](DeviceApi.md#setDetails) | **PUT** /device/details | 
+[**setDetails**](DeviceApi.md#setDetails) | **PUT** /device/details | Toggle your device tariff when your device goes online using this api.
 [**setToken**](DeviceApi.md#setToken) | **PUT** /device/token | 
 
 

@@ -28,6 +28,7 @@ export class PromiseDeviceApi {
     }
 
     /**
+     * Toggle your device tariff when your device goes online using this api.
      * @param setDeviceDetailsDto 
      */
     public setDetails(setDeviceDetailsDto: SetDeviceDetailsDto, _options?: Configuration): Promise<void> {
@@ -63,7 +64,7 @@ export class PromiseOrderApi {
     }
 
     /**
-     * @param orderToken This is the id recieved from the qrcode
+     * @param orderToken This is the id recieved from the qrcode or on your webhook
      */
     public getOrderById(orderToken: string, _options?: Configuration): Promise<void> {
         const result = this.api.getOrderById(orderToken, _options);
@@ -71,10 +72,11 @@ export class PromiseOrderApi {
     }
 
     /**
+     * @param orderToken This is the id recieved from the qrcode or on your webhook
      * @param orderStatusDto 
      */
-    public setStatus(orderStatusDto: OrderStatusDto, _options?: Configuration): Promise<void> {
-        const result = this.api.setStatus(orderStatusDto, _options);
+    public setStatus(orderToken: string, orderStatusDto: OrderStatusDto, _options?: Configuration): Promise<void> {
+        const result = this.api.setStatus(orderToken, orderStatusDto, _options);
         return result.toPromise();
     }
 
